@@ -20,6 +20,6 @@ public class ScrollObject : MonoBehaviour
         restartPosition.x = startPosition+diff;
         transform.position = restartPosition;
 
-        SendMessage("OnScrollEnd");
+        SendMessage("OnScrollEnd",SendMessageOptions.DontRequireReceiver);
     }
 }
