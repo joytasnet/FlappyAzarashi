@@ -35,6 +35,7 @@ public class AzarashiController : MonoBehaviour
     }
     public void Flap(){
         if(isDead) return;
+        if(rb2d.isKinematic) return;
         rb2d.velocity=new Vector2(0f,flapVelocity);
     }
     void ApplyAngle(){
@@ -50,5 +51,8 @@ public class AzarashiController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision){
         if(isDead) return;
         isDead=true;
+    }
+    public void SetSteerActive(bool active){
+        rb2d.isKinematic = !active;
     }
 }
