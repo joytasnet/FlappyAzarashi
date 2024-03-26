@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,9 +14,12 @@ public class GameController : MonoBehaviour
     }
 
     State state;
+    int score;
 
     public AzarashiController azarashi;
     public GameObject blocks;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI stateText;
     void Start()
     {
         Ready();
@@ -37,6 +42,10 @@ public class GameController : MonoBehaviour
 
         azarashi.SetSteerActive(false);
         blocks.SetActive(false);
+
+        scoreText.text="Score : " + 0;
+        stateText.gameObject.SetActive(true);
+        stateText.text="Ready";
     }
     void GameStart(){
         state=State.Play;
@@ -45,6 +54,8 @@ public class GameController : MonoBehaviour
         blocks.SetActive(true);
 
         azarashi.Flap();
+        stateText.gameObject.SetActive(false);
+        stateText.text="";
     }
     void GameOver(){
         state=State.GameOver;
@@ -52,12 +63,18 @@ public class GameController : MonoBehaviour
         ScrollObject[] scrollObjects = FindObjectsOfType<ScrollObject>();
 
         foreach(ScrollObject so in scrollObjects) so.enabled = false;
+        stateText.gameObject.SetActive(true);
+        stateText.text="GameOver";
 
     }
     void Reload(){
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
 
+    }
+    public void IncreaseScore(){
+        score++;
+        scoreText.text="Score : " + score;
     }
 
 }
